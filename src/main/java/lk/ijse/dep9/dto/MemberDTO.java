@@ -1,15 +1,26 @@
 package lk.ijse.dep9.dto;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import jakarta.validation.GroupDefinitionException;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import lk.ijse.dep9.dto.util.Groups;
 
 import java.io.Serializable;
 
 
 @JsonbPropertyOrder({"id","name","address","contact"})//to give the order that we want to print in the response
 public class MemberDTO implements Serializable {
+    @NotBlank(groups = Groups.update.class,message = "Member id cannot be empty")
     private String id;
+    @NotBlank(message = "Name cannot be empty")
+    @Pattern(regexp = "[A-Za-z ]+",message = "Invalid Name")
     private String name;
+    @NotBlank(message = "Address cannot be empty")
+    @Pattern(regexp = "[A-Za-z0-9,:;/\\-\\\\ ]+",message = "Invalid address")
     private String address;
+    @NotBlank(message = "Contact cannot be empty")
+    @Pattern(regexp = "\\d{3}-\\d{7}",message = "Invalid contact number")
     private String contact;
 
     public MemberDTO() {
